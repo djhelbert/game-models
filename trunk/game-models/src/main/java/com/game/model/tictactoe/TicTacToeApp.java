@@ -11,7 +11,7 @@ import com.game.model.tictactoe.model.Grid;
  * @author dhelbert
  *
  */
-public class MainApp {
+public class TicTacToeApp {
 
 	private static Game game;
 	
@@ -19,7 +19,7 @@ public class MainApp {
 	 * Constructor
 	 * 
 	 */
-	public MainApp() {
+	public TicTacToeApp() {
 	}
 	
 	/**
@@ -63,9 +63,12 @@ public class MainApp {
 		        	int x = Integer.parseInt(input.substring(0,1));
 		        	int y = Integer.parseInt(input.substring(2,3));
 				
-		        	if(game.getBoard().isOpen(x, y)) {
+		        	if(x>=0 && x<3 && y>=0 && y<3 && game.getBoard().isOpen(x, y)) {
 		        		game.getBoard().select(x, y, game.getCurrentPlayer());
 		        		valid = true;
+		        	}
+		        	else {
+		        		System.out.println("Try again!");
 		        	}
 		        }
 	        } 
