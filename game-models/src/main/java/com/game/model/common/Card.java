@@ -108,7 +108,7 @@ public class Card implements Comparable<Card> {
 		if( o.getType().getOrder() < getType().getOrder() ) {
 			return 1;
 		}
-		if( o.getType().getOrder() > getType().getOrder() ) {
+		else if( o.getType().getOrder() > getType().getOrder() ) {
 			return -1;
 		}
 		else {
