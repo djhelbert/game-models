@@ -71,7 +71,7 @@ public class Card implements Comparable<Card> {
      * @param rank
      * @param suit
      */
-    private Card(Type type, Suit suit) {
+    public Card(Type type, Suit suit) {
         this.type = type;
         this.suit = suit;
     }
