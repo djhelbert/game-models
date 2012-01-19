@@ -1,4 +1,4 @@
-package com.game.model.blackjack;
+package com.game.model.blackjack.model;
 
 /**
  * Dealer
