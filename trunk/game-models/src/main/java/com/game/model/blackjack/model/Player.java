@@ -1,4 +1,4 @@
-package com.game.model.blackjack;
+package com.game.model.blackjack.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +12,8 @@ import java.util.List;
 public class Player {
 
 	private int position;
+
+	private PlayerStrategy playerStrategy;
 	
 	private List<Hand> hands = new ArrayList<Hand>();
 
@@ -56,6 +58,22 @@ public class Player {
 	 */
 	public void setHands(List<Hand> hands) {
 		this.hands = hands;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public PlayerStrategy getPlayerStrategy() {
+		return playerStrategy;
+	}
+
+	/**
+	 * 
+	 * @param playerStrategy
+	 */
+	public void setPlayerStrategy(PlayerStrategy playerStrategy) {
+		this.playerStrategy = playerStrategy;
 	}
 	
 }
