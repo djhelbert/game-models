@@ -17,10 +17,39 @@ public class Table {
 	
 	private List<Player> players = new ArrayList<Player>();
 
+	private int minimum = 0;
+	
 	/**
 	 * Constructor
 	 */
-	public Table() {
+	public Table(int minimum) {
+		this.minimum = minimum;
+	}
+	
+	/**
+	 * Clear Hands
+	 */
+	public void clearHands() {
+		dealer.getHand().clear();
+		
+		for(Player p : players) {
+			p.clearHands();
+		}
+	}
+	
+	/**
+	 * Deal Hand
+	 * 
+	 */
+	public void dealHand() {
+		for(int i =0; i<2; i++) {
+			for(Player p : players) {
+				p.getHands().get(0).addCard(shoe.getCard());
+			}
+		}
+		
+		dealer.getHand().addCard(shoe.getCard());
+		dealer.getHand().addCard(shoe.getCard());
 	}
 	
 	/**
@@ -57,6 +86,15 @@ public class Table {
 	 */
 	public void setPlayers(List<Player> players) {
 		this.players = players;
+	}
+
+	/**
+	 * Get Minimum
+	 * 
+	 * @return
+	 */
+	public int getMinimum() {
+		return minimum;
 	}
 	
 }

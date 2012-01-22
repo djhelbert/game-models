@@ -1,5 +1,7 @@
 package com.game.model.blackjack;
 
+import com.game.model.blackjack.model.DealerStrategy;
+import com.game.model.blackjack.model.Player;
 import com.game.model.blackjack.model.Table;
 import com.game.model.common.Card.Type;
 
@@ -11,12 +13,26 @@ import com.game.model.common.Card.Type;
  */
 public class BlackjackApp {
 
-	private Table table = new Table();
+	private Table table = new Table(10);
 	
+	/**
+	 * 
+	 */
 	public BlackjackApp() {
 		init();
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
+	public Table getTable() {
+		return table;
+	}
+	
+	/**
+	 * 
+	 */
 	private void init() {
 		Type.ACE.setValue(1);
 		Type.DEUCE.setValue(2);
@@ -33,7 +49,23 @@ public class BlackjackApp {
 		Type.KING.setValue(10);
 	}
 	
+	/**
+	 * Main
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		BlackjackApp app = new BlackjackApp();
+		
+		Player p1 = new Player(1,false,100);
+		p1.setPlayerStrategy(new DealerStrategy());
+		app.getTable().getPlayers().add(p1);
+		
+		Player p2 = new Player(2,false,100);
+		p2.setPlayerStrategy(new DealerStrategy());
+		app.getTable().getPlayers().add(p2);
+		
+		app.getTable().clearHands();
+		app.getTable().dealHand();
 	}
 }
