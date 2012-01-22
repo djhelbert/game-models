@@ -17,6 +17,21 @@ public class Player {
 	
 	private List<Hand> hands = new ArrayList<Hand>();
 
+	private boolean human = false;
+
+	private int money = 0;
+	
+	/**
+	 * Constructor
+	 * 
+	 * @param position
+	 */
+	public Player(int position, boolean human, int money) {
+		this.position = position;
+		this.human    = human;
+		this.money    = money;
+	}
+	
 	/**
 	 * Constructor
 	 * 
@@ -38,8 +53,9 @@ public class Player {
 	/**
 	 * Clear
 	 */
-	public void clear() {
+	public void clearHands() {
 		hands.clear();
+		hands.add(new Hand(10));
 	}
 	
 	/**
@@ -61,6 +77,7 @@ public class Player {
 	}
 
 	/**
+	 * Get Player Strategy
 	 * 
 	 * @return
 	 */
@@ -69,11 +86,57 @@ public class Player {
 	}
 
 	/**
+	 * Set Player Strategy
 	 * 
 	 * @param playerStrategy
 	 */
 	public void setPlayerStrategy(PlayerStrategy playerStrategy) {
 		this.playerStrategy = playerStrategy;
 	}
-	
+
+	/**
+	 * Is Human
+	 * 
+	 * @return
+	 */
+	public boolean isHuman() {
+		return human;
+	}
+
+	/**
+	 * Set Human
+	 * 
+	 * @param human
+	 */
+	public void setHuman(boolean human) {
+		this.human = human;
+	}
+
+	/**
+	 * Get Money
+	 * 
+	 * @return
+	 */
+	public int getMoney() {
+		return money;
+	}
+
+	/**
+	 * 
+	 * @param money
+	 */
+	public void setMoney(int money) {
+		this.money = money;
+	}
+
+	/**
+	 * Split Hand
+	 * 
+	 * @param hand
+	 */
+	public void splitHand(Hand hand) {
+		Hand h2 = new Hand();
+		h2.addCard(hand.getCards().remove(0));
+		hands.add(h2);
+	}
 }
