@@ -14,7 +14,19 @@ public class Card implements Comparable<Card> {
      * @author dhelbert
      *
      */
-    public enum Suit { CLUBS, DIAMONDS, HEARTS, SPADES }
+    public enum Suit { CLUBS('C'), DIAMONDS('D'), HEARTS('H'), SPADES('S'); 
+    	
+    	private final char label;
+    	
+    	Suit(char label) {
+    		this.label = label;
+    	}
+    	
+    	@Override
+    	public String toString() {
+    		return "" + label;
+    	}
+    }
     
 	/**
 	 * Type
@@ -22,14 +34,17 @@ public class Card implements Comparable<Card> {
 	 * @author dhelbert
 	 *
 	 */
-    public enum Type { DEUCE(0), THREE(1), FOUR(2), FIVE(3), SIX(4), SEVEN(5), EIGHT(6), NINE(7), TEN(8), JACK(9), QUEEN(10), KING(11), ACE(12);
+    public enum Type { DEUCE(0,'2'), THREE(1,'3'), FOUR(2,'4'), FIVE(3,'5'), SIX(4,'6'), SEVEN(5,'7'), EIGHT(6,'8'), NINE(7,'9'), TEN(8,'T'), JACK(9,'J'), QUEEN(10,'Q'), KING(11,'K'), ACE(12,'A');
     	
     	private final int order;
-    
+    	
+    	private final char label;
+    	
     	private int value;
     	
-    	Type(int order) {
+    	Type(int order,char label) {
     		this.order = order;
+    		this.label = label;
     	}
     	
     	/**
@@ -56,6 +71,11 @@ public class Card implements Comparable<Card> {
     	 */
     	public void setValue(int value) {
     		this.value = value;
+    	}
+    	
+    	@Override
+    	public String toString() {
+    		return "" + label;
     	}
     }
 
@@ -96,7 +116,7 @@ public class Card implements Comparable<Card> {
     
     @Override
     public String toString() { 
-    	return "{type:" + type + " suit: " + suit + "}"; 
+    	return type + " " + suit; 
     }
 
     /**
