@@ -12,7 +12,7 @@ public class DealerStrategy implements PlayerStrategy {
 	 * Decide with Hand
 	 */
 	public OPTION decision(Hand hand) {
-		if( hand.getMaximumValue() >= 17) {
+		if( hand.getMaximumValue() >= 17 || hand.getSoftValue() >= 17) {
 			return OPTION.STAND;
 		}
 		

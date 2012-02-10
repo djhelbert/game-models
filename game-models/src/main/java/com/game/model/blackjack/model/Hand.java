@@ -127,7 +127,21 @@ public class Hand {
 	public int getNumberCards() {
 		return cards.size();
 	}
+
+	/**
+	 * Is Busted
+	 * 
+	 * @return boolean
+	 */
+	public boolean isBlackjack() {
+		return getMaximumValue() == 21;
+	}
 	
+	/**
+	 * Is Busted
+	 * 
+	 * @return boolean
+	 */
 	public boolean isBusted() {
 		return getSoftValue() > 21;
 	}

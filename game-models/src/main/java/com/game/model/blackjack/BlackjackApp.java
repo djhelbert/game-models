@@ -1,8 +1,12 @@
 package com.game.model.blackjack;
 
+import com.game.model.blackjack.model.Dealer;
 import com.game.model.blackjack.model.DealerStrategy;
+import com.game.model.blackjack.model.Hand;
 import com.game.model.blackjack.model.Player;
+import com.game.model.blackjack.model.PlayerStrategy.OPTION;
 import com.game.model.blackjack.model.Table;
+import com.game.model.common.Card;
 import com.game.model.common.Card.Type;
 
 /**
@@ -14,6 +18,8 @@ import com.game.model.common.Card.Type;
 public class BlackjackApp {
 
 	private Table table = new Table(10);
+	
+	private DealerStrategy dealerStrategy = new DealerStrategy();
 	
 	/**
 	 * 
@@ -50,6 +56,110 @@ public class BlackjackApp {
 	}
 	
 	/**
+	 * Draw Hand
+	 * 
+	 * @param name
+	 * @param hand
+	 * @param hide
+	 */
+	public void drawHand(String name, Hand hand, boolean hide) {
+		int i = 0;
+		
+		if( hide ) {
+			System.out.print(name + "\t**\t");
+		}
+		else {
+			System.out.print(name + "\t" + hand.getSoftValue() + "\t");
+		}
+		
+		for(Card c : hand.getCards() ) {
+			if( !hide || (i > 0) ) {
+				System.out.print(c);
+			}
+			else {
+				System.out.print("* *");
+			}
+			
+			System.out.print(" ");
+			
+			i++;
+		}
+		
+		System.out.println();
+	}
+	
+	/**
+	 * Draw Table
+	 * 
+	 * @param hide
+	 */
+	public void drawTable(boolean hide) {
+		Dealer dealer = table.getDealer();
+		
+		drawHand("Dealer",dealer.getHand(),hide);
+		
+		for(Player p : table.getPlayers() ) {
+			for(Hand h : p.getHands()) {
+				drawHand("Player" + p.getPosition(),h,false);
+			}
+		}
+		
+		System.out.println();
+	}
+	
+	/**
+	 * Dealer Black jack Check
+	 * 
+	 * @return
+	 */
+	public boolean dealerBlackJack() {
+		if( table.getDealer().getHand().isBlackjack() ) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public void dealerPlay() {
+		Hand hand = table.getDealer().getHand();
+		
+		OPTION option = dealerStrategy.decision(hand);
+		
+		while(option != OPTION.STAND && hand.getSoftValue() <= 21) {
+			Card c = table.getShoe().getCard();
+			hand.addCard(c);
+			System.out.println("Dealer " + c);
+			option = dealerStrategy.decision(hand);
+		}
+		
+		if( hand.getSoftValue() > 21 ) {
+			System.out.println("Dealer Bust!");
+		}
+		
+		System.out.println();
+	}
+	
+	public void playerPlay(Player player) {
+	}
+	
+	public void play() {
+		drawTable(true);
+		
+		if(dealerBlackJack()) {
+			drawTable(false);
+			System.out.println("Dealer Black Jack!");
+			return;
+		}
+		
+		drawTable(false);
+		
+		dealerPlay();
+		
+		drawTable(false);
+	}
+	
+	/**
 	 * Main
 	 * 
 	 * @param args
@@ -67,5 +177,7 @@ public class BlackjackApp {
 		
 		app.getTable().clearHands();
 		app.getTable().dealHand();
+		
+		app.play();
 	}
 }
