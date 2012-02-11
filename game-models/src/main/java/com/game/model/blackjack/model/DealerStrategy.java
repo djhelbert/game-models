@@ -1,12 +1,14 @@
 package com.game.model.blackjack.model;
 
+import com.game.model.blackjack.model.PlayerStrategy.OPTION;
+
 /**
  * Dealer Strategy
  * 
  * @author Derek
  *
  */
-public class DealerStrategy implements PlayerStrategy {
+public class DealerStrategy {
 
 	/**
 	 * Decide with Hand
