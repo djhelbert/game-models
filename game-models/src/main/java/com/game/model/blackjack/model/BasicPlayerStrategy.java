@@ -19,11 +19,15 @@ public class BasicPlayerStrategy implements PlayerStrategy {
 	 * @return OPTION
 	 */
 	public OPTION decision(Hand hand, Card dealerCard) {
+		if(hand.getSoftValue() <= 10) {
+			return OPTION.HIT;
+		}
+		
 		if( dealerCard.getType().getValue() == 5 || dealerCard.getType().getValue() == 6) {
 			return OPTION.STAND;
 		}
 		
-		if( hand.getMaximumValue() >= 17 || hand.getSoftValue() >= 17) {
+		if( (hand.getMaximumValue() >= 17 && hand.getMaximumValue() <= 21) || hand.getSoftValue() >= 17) {
 			return OPTION.STAND;
 		}
 		
