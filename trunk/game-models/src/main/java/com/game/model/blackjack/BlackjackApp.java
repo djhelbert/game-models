@@ -1,5 +1,8 @@
 package com.game.model.blackjack;
 
+import java.util.List;
+
+import com.game.model.blackjack.model.BasicPlayerStrategy;
 import com.game.model.blackjack.model.Dealer;
 import com.game.model.blackjack.model.DealerStrategy;
 import com.game.model.blackjack.model.Hand;
@@ -140,7 +143,31 @@ public class BlackjackApp {
 		System.out.println();
 	}
 	
-	public void playerPlay(Player player) {
+	/**
+	 * Player Play
+	 * 
+	 * @param player
+	 * @param dealerCard
+	 */
+	public void playerPlay(Player player, Card dealerCard) {
+		List<Hand> hands = player.getHands();
+		
+		for(Hand h : hands) {
+			OPTION option = player.getPlayerStrategy().decision(h,dealerCard);
+			
+			while(option != OPTION.STAND && h.getSoftValue() <= 21) {
+				Card c = table.getShoe().getCard();
+				h.addCard(c);
+				System.out.println("Player " + player.getPosition() + " " + c);
+				option = player.getPlayerStrategy().decision(h,dealerCard);
+			}
+			
+			if( h.getSoftValue() > 21 ) {
+				System.out.println("Player Bust!");
+			}			
+		}
+		
+		System.out.println();
 	}
 	
 	public void play() {
@@ -152,7 +179,11 @@ public class BlackjackApp {
 			return;
 		}
 		
-		drawTable(false);
+		Card c = table.getDealer().getHand().getCards().get(1);
+		
+		for(Player p : table.getPlayers()) {
+			playerPlay(p,c);
+		}
 		
 		dealerPlay();
 		
@@ -168,11 +199,11 @@ public class BlackjackApp {
 		BlackjackApp app = new BlackjackApp();
 		
 		Player p1 = new Player(1,false,100);
-		p1.setPlayerStrategy(new DealerStrategy());
+		p1.setPlayerStrategy(new BasicPlayerStrategy());
 		app.getTable().getPlayers().add(p1);
 		
 		Player p2 = new Player(2,false,100);
-		p2.setPlayerStrategy(new DealerStrategy());
+		p2.setPlayerStrategy(new BasicPlayerStrategy());
 		app.getTable().getPlayers().add(p2);
 		
 		app.getTable().clearHands();

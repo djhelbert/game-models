@@ -1,5 +1,7 @@
 package com.game.model.blackjack.model;
 
+import com.game.model.common.Card;
+
 /**
  * Player Action
  * 
@@ -8,14 +10,17 @@ package com.game.model.blackjack.model;
  */
 public interface PlayerStrategy {
 
+	/** Options */
 	public enum OPTION { HIT, STAND, SPLIT, DOUBLE }
 	
 	/**
 	 * Decide with Hand
 	 * 
 	 * @param hand
-	 * @return
+	 * @param dealerCard
+	 * 
+	 * @return OPTION
 	 */
-	public OPTION decision(Hand hand);
+	public OPTION decision(Hand hand, Card dealerCard);
 	
 }
