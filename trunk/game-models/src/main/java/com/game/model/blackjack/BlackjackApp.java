@@ -72,7 +72,7 @@ public class BlackjackApp {
 			System.out.print(name + "\t**\t");
 		}
 		else {
-			System.out.print(name + "\t" + hand.getSoftValue() + "\t");
+			System.out.print(name + "\t" + (hand.getMaximumValue() <=21 ? hand.getMaximumValue() : hand.getSoftValue()) + "\t");
 		}
 		
 		for(Card c : hand.getCards() ) {
