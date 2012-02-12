@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>game-models</groupId>
   <artifactId>game-models</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0.0</version>
   <name>Game Models</name>
   <description>Game Models</description>
 </project>
