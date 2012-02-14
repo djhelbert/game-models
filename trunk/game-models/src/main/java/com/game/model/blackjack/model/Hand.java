@@ -21,6 +21,8 @@ public class Hand {
 	
 	private UUID uuid = UUID.randomUUID();
 
+	private boolean done = false;
+	
 	/**
 	 * Constructor
 	 * 
@@ -164,6 +166,24 @@ public class Hand {
 		this.bet = bet;
 	}
 	
+	/**
+	 * Is Done
+	 * 
+	 * @return
+	 */
+	public boolean isDone() {
+		return done;
+	}
+
+	/**
+	 * Set Done
+	 * 
+	 * @param done
+	 */
+	public void setDone(boolean done) {
+		this.done = done;
+	}
+
 	@Override
 	public boolean equals(Object object) {
 		if(object instanceof Hand) {

@@ -3,6 +3,8 @@ package com.game.model.blackjack.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.game.model.common.Card;
+
 /**
  * Player
  * 
@@ -67,6 +69,22 @@ public class Player {
 		return hands;
 	}
 
+	/**
+	 * Get Active Hand
+	 * 
+	 * @return hand
+	 */
+	public Hand getActiveHand() {
+		for(Hand h : hands) {
+			if(!h.isDone()) {
+				return h;
+			}
+		}
+		
+		return null;
+	}
+
+	
 	/**
 	 * Set Hands
 	 * 
@@ -133,10 +151,14 @@ public class Player {
 	 * Split Hand
 	 * 
 	 * @param hand
+	 * @param card1
+	 * @param card2
 	 */
-	public void splitHand(Hand hand) {
-		Hand h2 = new Hand();
-		h2.addCard(hand.getCards().remove(0));
-		hands.add(h2);
+	public void splitHand(Hand hand, Card card1, Card card2) {
+		Hand newHand = new Hand();
+		newHand.addCard(hand.getCards().remove(0));
+		hands.add(newHand);
+		hand.addCard(card1);
+		newHand.addCard(card2);
 	}
 }
