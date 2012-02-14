@@ -124,6 +124,9 @@ public class BlackjackApp {
 		}
 	}
 	
+	/**
+	 * Dealer Play
+	 */
 	public void dealerPlay() {
 		Hand hand = table.getDealer().getHand();
 		
@@ -135,6 +138,8 @@ public class BlackjackApp {
 			System.out.println("Dealer " + c);
 			option = dealerStrategy.decision(hand);
 		}
+		
+		hand.setDone(true);
 		
 		if( hand.getSoftValue() > 21 ) {
 			System.out.println("Dealer Bust!");
@@ -150,21 +155,42 @@ public class BlackjackApp {
 	 * @param dealerCard
 	 */
 	public void playerPlay(Player player, Card dealerCard) {
-		List<Hand> hands = player.getHands();
+		Hand h = player.getActiveHand();
 		
-		for(Hand h : hands) {
-			OPTION option = player.getPlayerStrategy().decision(h,dealerCard);
+		while(h != null) {
+			if(h.getMaximumValue() == 21) {
+				h.setDone(true);
+				System.out.println("Player " +  player.getPosition() + " blackjack!");
+			}
 			
-			while(option != OPTION.STAND && h.getSoftValue() <= 21) {
+			OPTION option = player.getPlayerStrategy().decision(h,dealerCard,true,true);
+			
+			if(option == OPTION.SPLIT) {
+				player.splitHand(h,table.getShoe().getCard(),table.getShoe().getCard());
+				System.out.println("Player " +  player.getPosition() + " splits!");
+			}
+			else if(option == OPTION.DOUBLE) {
 				Card c = table.getShoe().getCard();
 				h.addCard(c);
+				h.setDone(true);
 				System.out.println("Player " + player.getPosition() + " " + c);
-				option = player.getPlayerStrategy().decision(h,dealerCard);
+			}
+			else {
+				while(option != OPTION.STAND && h.getSoftValue() <= 21) {
+					Card c = table.getShoe().getCard();
+					h.addCard(c);
+					System.out.println("Player " + player.getPosition() + " " + c);
+					option = player.getPlayerStrategy().decision(h,dealerCard,false,false);
+				}
+			
+				h.setDone(true);
 			}
 			
 			if( h.getSoftValue() > 21 ) {
-				System.out.println("Player Bust!");
-			}			
+				System.out.println("Player " +  player.getPosition() + " Bust!");
+			}
+			
+			h = player.getActiveHand();
 		}
 		
 		System.out.println();

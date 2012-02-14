@@ -18,9 +18,11 @@ public interface PlayerStrategy {
 	 * 
 	 * @param hand
 	 * @param dealerCard
+	 * @param canSplit
+	 * @param canDouble 
 	 * 
 	 * @return OPTION
 	 */
-	public OPTION decision(Hand hand, Card dealerCard);
+	public OPTION decision(Hand hand, Card dealerCard, boolean canSplit, boolean canDouble);
 	
 }
