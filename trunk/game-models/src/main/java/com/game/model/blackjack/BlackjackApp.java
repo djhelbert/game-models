@@ -211,6 +211,9 @@ public class BlackjackApp {
 	 * Play
 	 */
 	public void play() {
+		getTable().clearHands();
+		getTable().dealHand();
+		
 		drawTable(true);
 		
 		if(dealerBlackJack()) {
@@ -268,10 +271,21 @@ public class BlackjackApp {
 		Player p2 = new Player(2,false,100);
 		p2.setPlayerStrategy(new BasicPlayerStrategy());
 		app.getTable().getPlayers().add(p2);
-		
-		app.getTable().clearHands();
-		app.getTable().dealHand();
+
+		Player p3 = new Player(3,false,100);
+		p3.setPlayerStrategy(new BasicPlayerStrategy());
+		app.getTable().getPlayers().add(p3);
 		
 		app.play();
+		
+		if( args != null ) {
+			if( args.length == 1) {
+				int cnt = Integer.parseInt(args[0]);
+				
+				for(int i = 0; i < (cnt-1); i++ ) {
+					app.play();
+				}
+			}
+		}
 	}
 }
