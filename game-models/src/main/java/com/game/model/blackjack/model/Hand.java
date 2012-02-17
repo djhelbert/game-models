@@ -55,6 +55,9 @@ public class Hand {
 	 */
 	public void clear() {
 		cards.clear();
+		
+		done      = false;
+		blackjack = false;
 	}
 	
 	/**
