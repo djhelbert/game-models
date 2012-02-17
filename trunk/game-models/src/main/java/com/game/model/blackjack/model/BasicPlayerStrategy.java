@@ -33,7 +33,7 @@ public class BasicPlayerStrategy implements PlayerStrategy {
 			return OPTION.DOUBLE;
 		}
 		
-		if(hand.getSoftValue() <= 10) {
+		if(hand.getSoftValue() <= 11) {
 			return OPTION.HIT;
 		}
 		

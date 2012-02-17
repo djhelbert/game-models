@@ -23,6 +23,8 @@ public class Hand {
 
 	private boolean done = false;
 	
+	private boolean blackjack = false;
+	
 	/**
 	 * Constructor
 	 * 
@@ -122,6 +124,22 @@ public class Hand {
 	}
 	
 	/**
+	 * Get Value
+	 * 
+	 * @return int
+	 */
+	public int getValue() {
+		int soft = getSoftValue();
+		int max  = getMaximumValue();
+		
+		if(max <= 21) {
+			return max;
+		}
+		
+		return soft;
+	}
+	
+	/**
 	 * Get Number of Cards
 	 * 
 	 * @return int
@@ -131,12 +149,12 @@ public class Hand {
 	}
 
 	/**
-	 * Is Busted
+	 * Is Blackjack
 	 * 
 	 * @return boolean
 	 */
 	public boolean isBlackjack() {
-		return getMaximumValue() == 21;
+		return blackjack;
 	}
 	
 	/**
@@ -182,6 +200,15 @@ public class Hand {
 	 */
 	public void setDone(boolean done) {
 		this.done = done;
+	}
+
+	/**
+	 * Set Blackjack
+	 * 
+	 * @param blackjack
+	 */
+	public void setBlackjack(boolean blackjack) {
+		this.blackjack = blackjack;
 	}
 
 	@Override
