@@ -21,7 +21,7 @@ public class Player {
 
 	private boolean human = false;
 
-	private int money = 0;
+	private int money = 100;
 	
 	/**
 	 * Constructor
@@ -155,7 +155,7 @@ public class Player {
 	 * @param card2
 	 */
 	public void splitHand(Hand hand, Card card1, Card card2) {
-		Hand newHand = new Hand();
+		Hand newHand = new Hand(hand.getBet());
 		newHand.addCard(hand.getCards().remove(0));
 		hands.add(newHand);
 		hand.addCard(card1);

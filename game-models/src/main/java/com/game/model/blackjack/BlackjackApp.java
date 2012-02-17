@@ -1,7 +1,5 @@
 package com.game.model.blackjack;
 
-import java.util.List;
-
 import com.game.model.blackjack.model.BasicPlayerStrategy;
 import com.game.model.blackjack.model.Dealer;
 import com.game.model.blackjack.model.DealerStrategy;
@@ -25,22 +23,23 @@ public class BlackjackApp {
 	private DealerStrategy dealerStrategy = new DealerStrategy();
 	
 	/**
-	 * 
+	 * Constructor
 	 */
 	public BlackjackApp() {
 		init();
 	}
 	
 	/**
+	 * Get Table
 	 * 
-	 * @return
+	 * @return Table
 	 */
 	public Table getTable() {
 		return table;
 	}
 	
 	/**
-	 * 
+	 * Init
 	 */
 	private void init() {
 		Type.ACE.setValue(1);
@@ -72,7 +71,7 @@ public class BlackjackApp {
 			System.out.print(name + "\t**\t");
 		}
 		else {
-			System.out.print(name + "\t" + (hand.getMaximumValue() <=21 ? hand.getMaximumValue() : hand.getSoftValue()) + "\t");
+			System.out.print(name + "\t" + hand.getValue() + "\t");
 		}
 		
 		for(Card c : hand.getCards() ) {
@@ -98,6 +97,12 @@ public class BlackjackApp {
 	 */
 	public void drawTable(boolean hide) {
 		Dealer dealer = table.getDealer();
+
+		for(Player p : table.getPlayers() ) {
+			System.out.print("Player" + p.getPosition() + " $" + p.getMoney() + " ");
+		}
+		
+		System.out.println("\n");
 		
 		drawHand("Dealer",dealer.getHand(),hide);
 		
@@ -130,6 +135,10 @@ public class BlackjackApp {
 	public void dealerPlay() {
 		Hand hand = table.getDealer().getHand();
 		
+		if(hand.getMaximumValue() == 21) {
+			hand.setBlackjack(true);
+		}
+		
 		OPTION option = dealerStrategy.decision(hand);
 		
 		while(option != OPTION.STAND && hand.getSoftValue() <= 21) {
@@ -160,7 +169,8 @@ public class BlackjackApp {
 		while(h != null) {
 			if(h.getMaximumValue() == 21) {
 				h.setDone(true);
-				System.out.println("Player " +  player.getPosition() + " blackjack!");
+				h.setBlackjack(true);
+				System.out.println("Player " +  player.getPosition() + " Blackjack!");
 			}
 			
 			OPTION option = player.getPlayerStrategy().decision(h,dealerCard,true,true);
@@ -173,6 +183,7 @@ public class BlackjackApp {
 				Card c = table.getShoe().getCard();
 				h.addCard(c);
 				h.setDone(true);
+				h.setBet(h.getBet()*2);
 				System.out.println("Player " + player.getPosition() + " " + c);
 			}
 			else {
@@ -196,6 +207,9 @@ public class BlackjackApp {
 		System.out.println();
 	}
 	
+	/**
+	 * Play
+	 */
 	public void play() {
 		drawTable(true);
 		
@@ -212,6 +226,29 @@ public class BlackjackApp {
 		}
 		
 		dealerPlay();
+		
+		for(Player p : table.getPlayers() ) {
+			for(Hand h : p.getHands()) {
+				if(h.getSoftValue() > 21) {
+					p.setMoney(p.getMoney() - h.getBet());
+				}
+				else if(h.isBlackjack()) {
+					p.setMoney(p.getMoney() + (int)(1.5*h.getBet()));
+				}
+				else if(h.getValue() <=21 && h.getValue() == table.getDealer().getHand().getValue()) {
+					// Push
+				}
+				else if(h.getValue() <=21 && h.getValue() > table.getDealer().getHand().getValue()) {
+					p.setMoney(p.getMoney() + h.getBet());
+				}
+				else if(h.getValue() <=21 && table.getDealer().getHand().getValue() > 21) {
+					p.setMoney(p.getMoney() + h.getBet());
+				}
+				else {
+					p.setMoney(p.getMoney() - h.getBet());
+				}
+			}
+		}
 		
 		drawTable(false);
 	}

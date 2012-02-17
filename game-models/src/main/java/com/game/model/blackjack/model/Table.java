@@ -17,7 +17,7 @@ public class Table {
 	
 	private List<Player> players = new ArrayList<Player>();
 
-	private int minimum = 0;
+	private int minimum = 10;
 	
 	/**
 	 * Constructor
